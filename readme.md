@@ -9,9 +9,9 @@ put the ".htaccess" and "compiler" folder to scss directory like this.
  - style.scss
  - .htaccess
  - *compiler*
-   - scss.php
-   - scss.inc.php
-   - cssmin.inc.php
+    - scss.php
+    - scss.inc.php
+    - cssmin.inc.php
 
 and access sass file on your browser.
 
