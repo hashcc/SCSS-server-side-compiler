@@ -4,7 +4,7 @@
   require "cssmin.inc.php";
   
   $scss = new SCSS;
-  
+
   // Check URI if fiie-name only contains ABC.. + 123.. + .
   $scss->checkURI();
   // Get SCSS
@@ -15,14 +15,14 @@
   $scss->minify();
   // Output CSS
   $scss->output();
-  
 
 class SCSS{
   
-  function __construct(){
+  public function __construct(){
     
-    // SCSS path
-    $this->path = "../";
+    // SCSS dir
+    $this->dir = "../";
+
     // SCSS format style
     // - scss_formatter
     // - scss_formatter_nested
@@ -35,7 +35,7 @@ class SCSS{
   
   }
   
-  function checkURI(){
+  public function checkURI(){
   
     if (preg_match("/^[a-zA-Z0-9\.]+$/D", $_GET["filename"]) !== 1){
       exit("SCSS file must be specified with alphabets and numeric characters only.");
@@ -43,28 +43,31 @@ class SCSS{
   
   }
   
-  function get(){
-  
-    $this->file = file_get_contents($this->path.$_GET["filename"]);
-  
+  public function get(){
+    
+    $this->file = file_get_contents($this->dir.$_GET["filename"]);
+
   }
   
-  function compile(){
+  public function compile(){
 
     if (!$this->doCompile) return;
 
     // Use scssphp library
     $compiler = new scssc();
     // default @import directory
-    $compiler->setImportPaths($this->path);
+    $compiler->setImportPaths($this->dir);
     // Let the stylesheet minimum
     $compiler->setFormatter($this->formatter);
     
-    $this->file = $compiler->compile($this->file);
-  
+    try {
+      $this->file = $compiler->compile($this->file);
+    } catch (Exception $e){
+      exit("<dl><dt>An Error occured while compiling</dt><dd>".$e->getMessage()."</dd></dl>");
+    }
   }
 
-  function minify(){
+  public function minify(){
   
     if (!$this->doMinify) return;
 
@@ -72,9 +75,25 @@ class SCSS{
   
   }
   
-  function output(){
+  public function gzip(){
+    
+    // check if browser support gzip encoding
+    $headers = getallheaders();
+    if (strpos($headers["Accept-Encoding"], "gzip") === false) return false;
 
-    header("Content-type: text/css; charset=UTF-8");
+    // gzip compression
+    $this->file = gzencode($this->file);
+    header("content-length: ". strlen($this->file));
+    header("content-encoding: gzip");
+
+  }
+
+  public function output(){
+    
+    // gzip if available
+    $this->gzip();
+    
+    header("content-type: text/css; charset=utf-8");
     print_r($this->file);
 
   }
