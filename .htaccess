@@ -1,7 +1,7 @@
 # Redirect SCSS to its compiler
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteCond %{REQUEST_URI} \.s[ac]ss$
+RewriteCond %{REQUEST_URI} \.s[ac]ss(\?[a-z\,]+)?$
 RewriteRule ^.*$ %{REQUEST_URI} [C]
-RewriteRule (.*)/([a-zA-Z0-9]+\.s[ac]ss)$ $1/compiler/scss.php?filename=$2 [L]
+RewriteRule (.*)/([a-zA-Z0-9]+\.s[ac]ss)$ $1/compiler/scss.php?filename=$2&options=%{QUERY_STRING} [L]
 </IfModule>
