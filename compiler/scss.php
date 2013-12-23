@@ -37,7 +37,7 @@ class SCSS{
   
   public function checkURI(){
   
-    if (preg_match("/^[a-zA-Z0-9\.]+$/D", $_GET["filename"]) !== 1){
+    if (preg_match("/^[a-zA-Z0-9\-_\.]+$/D", $_GET["filename"]) !== 1){
       exit("SCSS file must be specified with alphabets and numeric characters only.");
     }
   
@@ -52,6 +52,7 @@ class SCSS{
   public function compile(){
 
     if (!$this->doCompile) return;
+    if (!$this->uriMatch("compile")) return;
 
     // Use scssphp library
     $compiler = new scssc();
@@ -70,6 +71,7 @@ class SCSS{
   public function minify(){
   
     if (!$this->doMinify) return;
+    if (!$this->uriMatch("min")) return;
 
     $this->file = CssMin::minify($this->file);
   
@@ -95,6 +97,14 @@ class SCSS{
     
     header("content-type: text/css; charset=utf-8");
     print_r($this->file);
+
+  }
+
+  public function uriMatch($str){
+    
+    if (!$_SERVER["QUERY_STRING"]) return false;
+    
+    return (preg_match("/".$str."/", $_SERVER["QUERY_STRING"])) ? true : false;
 
   }
 
