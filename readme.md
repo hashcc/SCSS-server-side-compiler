@@ -1,6 +1,4 @@
-# SCSS to CSS compiler
-
-Server-side sass compiler (minifier).
+# Server-side Sass auto-compiler (minifier)
 
 ## Usage
 
@@ -25,4 +23,4 @@ And scss.php compiles & minifies using following library.
 - Minify with [CssMin](http://code.google.com/p/cssmin/) (MIT License)
 
 ## License
-MIT License
+[MIT License](http://opensource.org/licenses/MIT)
