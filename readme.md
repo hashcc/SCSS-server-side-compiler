@@ -3,6 +3,7 @@
 Server-side sass compiler (minifier).
 
 ## Usage
+
 put the ".htaccess" and "compiler" folder to scss directory like this.
 
 - *css* 
@@ -13,7 +14,7 @@ put the ".htaccess" and "compiler" folder to scss directory like this.
     - scss.inc.php
     - cssmin.inc.php
 
-and access sass file on your browser.
+And access sass file with query "min", "compile" (e.g. hoge.scss?min,compile). Action of this code is controled by query, so do nothing when no query specified (raw scss file).
 
 ## How?
 If you access sass file, simply mod_rewites URI to the scss.php .
