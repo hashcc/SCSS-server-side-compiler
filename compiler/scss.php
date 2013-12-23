@@ -102,9 +102,9 @@ class SCSS{
 
   public function uriMatch($str){
     
-    if (!$_SERVER["QUERY_STRING"]) return false;
+    if (!$_GET["options"]) return false;
     
-    return (preg_match("/".$str."/", $_SERVER["QUERY_STRING"])) ? true : false;
+    return (preg_match("/".$str."/", $_GET["options"])) ? true : false;
 
   }
 
