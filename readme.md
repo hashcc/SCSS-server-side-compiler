@@ -1,5 +1,8 @@
 # Server-side Sass auto-compiler (minifier)
 
+Explain in Japanese:
+  http://note.openvista.jp/2013/scss-server-side-compiler/
+
 ## Usage
 
 put the ".htaccess" and "compiler" folder to scss directory like this.
